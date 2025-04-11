@@ -1269,7 +1269,7 @@ class StreamDock extends EventEmitter {
 		// if (writebuffer.byteLength != StreamDock.packetSize) {
 		if (writebuffer.byteLength != StreamDock.packetSize + 1) {
 			console.error(
-				`Data lenght problem while sending packet to stream dock. Should be ${StreamDock.packetSize}B, but is ${writebuffer.byteLength}B. Payload size is ${data.length}B and prefix is [${prefix.join(',')}] `
+				`Data length problem while sending packet to stream dock. Should be ${this.packetSize}B, but is ${writebuffer.byteLength}B. Payload size is ${data.length}B and prefix is [${prefix.join(',')}] `
 			)
 		}
 		await this.writeRaw(writebuffer).catch((e) => {
@@ -1303,7 +1303,7 @@ class StreamDock extends EventEmitter {
 		// if (writebuffer.byteLength != StreamDock.packetSize) {
 		if (writebuffer.byteLength != StreamDock.packetSize + 1) {
 			console.error(
-				`Data lenght problem while sending packet to stream dock. Should be ${StreamDock.packetSize}B, but is ${writebuffer.byteLength}B. Payload size is ${data.length}B and prefix is [${prefix.join(',')}] `
+				`Data length problem while sending packet to stream dock. Should be ${this.packetSize}B, but is ${writebuffer.byteLength}B. Payload size is ${data.length}B and prefix is [${prefix.join(',')}] `
 			)
 		}
 		let writepr, sendpr
