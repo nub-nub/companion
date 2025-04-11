@@ -937,11 +937,12 @@ export class SurfaceController extends EventEmitter<SurfaceControllerEvents> {
 											await this.#addDevice(deviceInfo.path, {}, '203-mystrix', SurfaceUSB203SystemsMystrix)
 										}
 									} else if (
-										(deviceInfo.vendorId === 0x6602 || deviceInfo.vendorId === 0x6603) && // Mirabox
+										(deviceInfo.vendorId === 0x6602 || deviceInfo.vendorId === 0x6603 || deviceInfo.vendorId === 0x5548) && // Mirabox
 										(deviceInfo.productId === 0x1001 ||
-											deviceInfo.productId === 0x1007 ||
+											deviceInfo.productId === 0x1007 || // Stream Dock N4 or 293V3
 											deviceInfo.productId === 0x1005 ||
-											deviceInfo.productId === 0x1006) && // Stream Dock N4 or 293V3
+											deviceInfo.productId === 0x1006 ||
+											deviceInfo.productId === 0x6670) && // or 293S 
 										deviceInfo.interface === 0
 									) {
 										if (this.#handlerDependencies.userconfig.getKey('mirabox_streamdock_enable')) {

@@ -114,9 +114,11 @@ export class SurfaceUSBMiraboxStreamDock extends EventEmitter<SurfacePanelEvents
 					return
 				} else {
 					try {
+						let rot: number = 180 + (isNaN(this.#streamDock.rotationIconOnly) ? 0 : this.#streamDock.rotationIconOnly)
 						newbuffer = await transformButtonImage(
 							render,
-							offsetRotation(this.config.rotation, 180),
+							//seth
+							offsetRotation(this.config.rotation, rot),
 							output.resolutionx,
 							output.resolutiony,
 							imageRs.PixelFormat.Rgb
@@ -1486,7 +1488,7 @@ class StreamDock extends EventEmitter {
 
 
 	private static cmdPrefix = [0x43, 0x52, 0x54, 0, 0]
-	private static packetSize = 1024
+	private packetSize = 1024
 
 	private info: Device
 	private device: HIDAsync
@@ -1506,9 +1508,15 @@ class StreamDock extends EventEmitter {
 		if (this.info.productId === 0x1005 || this.info.productId === 0x1006) {
 			// modelType = '293V3'
 			this.model = StreamDock.models['293V3']
+			this.packetSize = 1024
 		} else if (this.info.productId === 0x1001 || this.info.productId === 0x1007) {
 			// modelType = 'N4'
 			this.model = StreamDock.models['N4-1234']
+			this.packetSize = 1024
+		} else if (this.info.productId === 0x6670) {
+			// modelType = '293S (Slim)'
+			this.model = StreamDock.models['293S']
+			this.packetSize = 512
 		} else {
 			// this.modelType = 'Unknown'
 			this.emit('remove')
@@ -1563,10 +1571,10 @@ class StreamDock extends EventEmitter {
 
 		const prefixbuffer = Buffer.from(prefix)
 		// const writebuffer = Buffer.concat([prefixbuffer, data], StreamDock.packetSize)
-		const writebuffer = Buffer.concat([Buffer.from([0]), prefixbuffer, data], StreamDock.packetSize + 1)
+		const writebuffer = Buffer.concat([Buffer.from([0]), prefixbuffer, data], this.packetSize + 1)
 
 		// if (writebuffer.byteLength != StreamDock.packetSize) {
-		if (writebuffer.byteLength != StreamDock.packetSize + 1) {
+		if (writebuffer.byteLength != this.packetSize + 1) {
 			console.error(
 				`Data length problem while sending packet to stream dock. Should be ${this.packetSize}B, but is ${writebuffer.byteLength}B. Payload size is ${data.length}B and prefix is [${prefix.join(',')}] `
 			)
@@ -1575,8 +1583,8 @@ class StreamDock extends EventEmitter {
 			throw 'Sending command to Stream Dock failed ' + e
 		})
 
-		if (data.byteLength + prefixbuffer.byteLength > StreamDock.packetSize) {
-			const remain = data.subarray(StreamDock.packetSize - prefixbuffer.byteLength)
+		if (data.byteLength + prefixbuffer.byteLength > this.packetSize) {
+			const remain = data.subarray(this.packetSize - prefixbuffer.byteLength)
 			await this.sendCmd(remain, []).catch((e) => {
 				console.error('Sending remaining data to Stream Dock failed ' + e)
 			})
@@ -1597,10 +1605,10 @@ class StreamDock extends EventEmitter {
 
 		const prefixbuffer = Buffer.from(prefix)
 		// const writebuffer = Buffer.concat([prefixbuffer, data], StreamDock.packetSize)
-		const writebuffer = Buffer.concat([Buffer.from([0]), prefixbuffer, data], StreamDock.packetSize + 1)
+		const writebuffer = Buffer.concat([Buffer.from([0]), prefixbuffer, data], this.packetSize + 1)
 
 		// if (writebuffer.byteLength != StreamDock.packetSize) {
-		if (writebuffer.byteLength != StreamDock.packetSize + 1) {
+		if (writebuffer.byteLength != this.packetSize + 1) {
 			console.error(
 				`Data length problem while sending packet to stream dock. Should be ${this.packetSize}B, but is ${writebuffer.byteLength}B. Payload size is ${data.length}B and prefix is [${prefix.join(',')}] `
 			)
@@ -1608,8 +1616,8 @@ class StreamDock extends EventEmitter {
 		let writepr, sendpr
 		writepr = this.writeRaw(writebuffer)
 
-		if (data.byteLength + prefixbuffer.byteLength > StreamDock.packetSize) {
-			const remain = data.subarray(StreamDock.packetSize - prefixbuffer.byteLength)
+		if (data.byteLength + prefixbuffer.byteLength > this.packetSize) {
+			const remain = data.subarray(this.packetSize - prefixbuffer.byteLength)
 			sendpr = this.sendCmdSync(remain, [])
 		}
 
@@ -1639,6 +1647,16 @@ class StreamDock extends EventEmitter {
 
 	get serialNumber() {
 		return this.info.serialNumber
+	}
+
+	// is there a better place to handle this?
+	// the rotation config option acts on the entire surface and not just icon rotation 
+	get rotationIconOnly() {
+		if (this.model?.productName === 'Stream Dock 293S') {
+			return -90 // the 293S needs some special rotation
+
+		}
+		else return 0
 	}
 
 	get productName() {
