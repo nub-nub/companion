@@ -117,7 +117,6 @@ export class SurfaceUSBMiraboxStreamDock extends EventEmitter<SurfacePanelEvents
 						let rot: number = (isNaN(this.#streamDock.iconRotation) ? 0 : this.#streamDock.iconRotation)
 						newbuffer = await transformButtonImage(
 							render,
-							//seth
 							offsetRotation(this.config.rotation, rot),
 							output.resolutionx,
 							output.resolutiony,
@@ -1855,17 +1854,6 @@ class StreamDock extends EventEmitter {
 		return this.info.serialNumber
 	}
 
-	// is there a better place to handle this?
-	// the rotation config option acts on the entire surface and not just icon rotation
-	// and the different models all seem to have varying placement of the displays
-	// get iconRotationByModel() {
-	// 	switch(this.model?.productName) {
-	// 		case 'Stream Dock 293S': { return 90 ; break}
-	// 		case 'Stream Dock N3': { return -90 ; break }
-	// 		case 'Stream Dock N4': { return 180 ; break}
-	// 		default: { return 0 ; break}
-	// 	}
-	// }
 	get iconRotation() {
 		return this.model.iconRotation ?? 0
 	}
