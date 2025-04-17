@@ -114,7 +114,7 @@ export class SurfaceUSBMiraboxStreamDock extends EventEmitter<SurfacePanelEvents
 					return
 				} else {
 					try {
-						let rot: number = 180 + (isNaN(this.#streamDock.rotationIconOnly) ? 0 : this.#streamDock.rotationIconOnly)
+						let rot: number = (isNaN(this.#streamDock.iconRotation) ? 0 : this.#streamDock.iconRotation)
 						newbuffer = await transformButtonImage(
 							render,
 							//seth
@@ -267,6 +267,7 @@ export class SurfaceUSBMiraboxStreamDock extends EventEmitter<SurfacePanelEvents
 
 interface StreamDockModelDefinition {
 	productName: string
+	iconRotation: number
 	inputs: any[]
 	outputs: any[]
 }
@@ -279,6 +280,7 @@ class StreamDock extends EventEmitter {
 	static models = {
 		'293V3': {
 			productName: 'Stream Dock 293V3',
+			iconRotation: 0,
 			pid: 0x1001,
 
 			inputs: [
@@ -526,8 +528,497 @@ class StreamDock extends EventEmitter {
 				},
 			],
 		},
+		'293S': {
+	    productName: 'Stream Dock 293S',
+			iconRotation: 90,
+	  	pid: 0x6670,
+			inputs: [
+				{
+					type: 'push',
+					id: 0x0d,
+					row: 0,
+					column: 0,
+					name: 'Button 1',
+				},
+				{
+					type: 'push',
+					id: 0x0a,
+					row: 0,
+					column: 1,
+					name: 'Button 2',
+				},
+				{
+					type: 'push',
+					id: 0x07,
+					row: 0,
+					column: 2,
+					name: 'Button 3',
+				},
+				{
+					type: 'push',
+					id: 0x04,
+					row: 0,
+					column: 3,
+					name: 'Button 4',
+				},
+				{
+					type: 'push',
+					id: 0x01,
+					row: 0,
+					column: 4,
+					name: 'Button 5',
+				},
+				{
+					type: 'push',
+					id: 0x0e,
+					row: 1,
+					column: 0,
+					name: 'Button 6',
+				},
+				{
+					type: 'push',
+					id: 0x0b,
+					row: 1,
+					column: 1,
+					name: 'Button 7',
+				},
+				{
+					type: 'push',
+					id: 0x08,
+					row: 1,
+					column: 2,
+					name: 'Button 8',
+				},
+				{
+					type: 'push',
+					id: 0x05,
+					row: 1,
+					column: 3,
+					name: 'Button 9',
+				},
+				{
+					type: 'push',
+					id: 0x02,
+					row: 1,
+					column: 4,
+					name: 'Button 10',
+				},
+				{
+					type: 'push',
+					id: 0x0f,
+					row: 2,
+					column: 0,
+					name: 'Button 11',
+				},
+				{
+					type: 'push',
+					id: 0x0c,
+					row: 2,
+					column: 1,
+					name: 'Button 12',
+				},
+				{
+					type: 'push',
+					id: 0x09,
+					row: 2,
+					column: 2,
+					name: 'Button 13',
+				},
+				{
+					type: 'push',
+					id: 0x06,
+					row: 2,
+					column: 3,
+					name: 'Button 14',
+				},
+				{
+					type: 'push',
+					id: 0x03,
+					row: 2,
+					column: 4,
+					name: 'Button 15',
+				},
+	
+				{
+					type: 'push',
+					id: 0x10,
+					row: 0,
+					column: 5,
+					name: 'Softbutton 1',
+				},
+				{
+					type: 'push',
+					id: 0x11,
+					row: 1,
+					column: 5,
+					name: 'Softbutton 2',
+				},
+				{
+					type: 'push',
+					id: 0x12,
+					row: 2,
+					column: 5,
+					name: 'Softbutton 3',
+				}
+			],
+			outputs: [
+				{
+					type: 'lcd',
+					id: 0x0d,
+					row: 0,
+					column: 0,
+					name: 'LCD 1',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x0a,
+					row: 0,
+					column: 1,
+					name: 'LCD 2',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x07,
+					row: 0,
+					column: 2,
+					name: 'LCD 3',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x04,
+					row: 0,
+					column: 3,
+					name: 'LCD 4',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x01,
+					row: 0,
+					column: 4,
+					name: 'LCD 5',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x0e,
+					row: 1,
+					column: 0,
+					name: 'LCD 6',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x0b,
+					row: 1,
+					column: 1,
+					name: 'LCD 7',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x08,
+					row: 1,
+					column: 2,
+					name: 'LCD 8',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x05,
+					row: 1,
+					column: 3,
+					name: 'LCD 9',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x02,
+					row: 1,
+					column: 4,
+					name: 'LCD 10',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x0f,
+					row: 2,
+					column: 0,
+					name: 'LCD 11',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x0c,
+					row: 2,
+					column: 1,
+					name: 'LCD 12',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x09,
+					row: 2,
+					column: 2,
+					name: 'LCD 13',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x06,
+					row: 2,
+					column: 3,
+					name: 'LCD 14',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+				{
+					type: 'lcd',
+					id: 0x03,
+					row: 2,
+					column: 4,
+					name: 'LCD 15',
+					resolutionx: 85,
+					resolutiony: 85,
+				},
+
+				{
+					type: 'lcd',
+					id: 0x10,
+					row: 0,
+					column: 5,
+					name: 'Strip 1',
+					resolutionx: 80,
+					resolutiony: 80,
+				},
+				{
+					type: 'lcd',
+					id: 0x11,
+					row: 1,
+					column: 5,
+					name: 'Strip 2',
+					resolutionx: 80,
+					resolutiony: 80,
+				},
+				{
+					type: 'lcd',
+					id: 0x12,
+					row: 2,
+					column: 5,
+					name: 'Strip 3',
+					resolutionx: 80,
+					resolutiony: 80,
+				}
+			],
+		},
+		'N3-EN': {
+			productName: 'Stream Dock N3',
+			iconRotation: -90,
+			pid: 0x1003,
+			inputs: [
+				{
+					type: 'button',
+					id: 0x01,
+					row: 0,
+					column: 0,
+					name: 'Button 1',
+				},
+				{
+					type: 'button',
+					id: 0x02,
+					row: 0,
+					column: 1,
+					name: 'Button 2',
+				},
+				{
+					type: 'button',
+					id: 0x03,
+					row: 0,
+					column: 2,
+					name: 'Button 3',
+				},
+				{
+					type: 'button',
+					id: 0x04,
+					row: 1,
+					column: 0,
+					name: 'Button 4',
+				},
+				{
+					type: 'button',
+					id: 0x05,
+					row: 1,
+					column: 1,
+					name: 'Button 5',
+				},
+				{
+					type: 'button',
+					id: 0x06,
+					row: 1,
+					column: 2,
+					name: 'Button 6',
+				},
+				{
+					type: 'button',
+					id: 0x25,
+					row: 2,
+					column: 0,
+					name: 'Tiny Button 1',
+				},
+				{
+					type: 'button',
+					id: 0x30,
+					row: 2,
+					column: 1,
+					name: 'Tiny Button 2',
+				},
+				{
+					type: 'button',
+					id: 0x31,
+					row: 2,
+					column: 2,
+					name: 'Tiny Button 3',
+				},
+				{
+					type: 'push',
+					id: 0x35,
+					row: 3,
+					column: 0,
+					name: 'Rotary encoder 1 (Big)',
+				},
+				{
+					type: 'rotateLeft',
+					id: 0x50,
+					row: 3,
+					column: 0,
+					name: 'Rotary encoder 1 (Big)',
+				},
+				{
+					type: 'rotateRight',
+					id: 0x51,
+					row: 3,
+					column: 0,
+					name: 'Rotary encoder 1 (Big)',
+				},
+				{
+					type: 'push',
+					id: 0x33,
+					row: 3,
+					column: 1,
+					name: 'Rotary encoder 2',
+				},
+				{
+					type: 'rotateLeft',
+					id: 0x90,
+					row: 3,
+					column: 1,
+					name: 'Rotary encoder 2',
+				},
+				{
+					type: 'rotateRight',
+					id: 0x91,
+					row: 3,
+					column: 1,
+					name: 'Rotary encoder 2',
+				},
+				{
+					type: 'push',
+					id: 0x34,
+					row: 3,
+					column: 2,
+					name: 'Rotary encoder 3',
+				},
+				{
+					type: 'rotateLeft',
+					id: 0x60,
+					row: 3,
+					column: 2,
+					name: 'Rotary encoder 3',
+				},
+				{
+					type: 'rotateRight',
+					id: 0x61,
+					row: 3,
+					column: 2,
+					name: 'Rotary encoder 3',
+				},
+			],
+			outputs: [
+				{
+					type: 'lcd',
+					id: 0x01,
+					row: 0,
+					column: 0,
+					name: 'LCD 1',
+					resolutionx: 64,
+					resolutiony: 64,
+				},
+				{
+					type: 'lcd',
+					id: 0x02,
+					row: 0,
+					column: 1,
+					name: 'LCD 2',
+					resolutionx: 64,
+					resolutiony: 64,
+				},
+				{
+					type: 'lcd',
+					id: 0x03,
+					row: 0,
+					column: 2,
+					name: 'LCD 3',
+					resolutionx: 64,
+					resolutiony: 64,
+				},
+				{
+					type: 'lcd',
+					id: 0x04,
+					row: 1,
+					column: 0,
+					name: 'LCD 4',
+					resolutionx: 64,
+					resolutiony: 64,
+				},
+				{
+					type: 'lcd',
+					id: 0x05,
+					row: 1,
+					column: 1,
+					name: 'LCD 5',
+					resolutionx: 64,
+					resolutiony: 64,
+				},
+				{
+					type: 'lcd',
+					id: 0x06,
+					row: 1,
+					column: 2,
+					name: 'LCD 6',
+					resolutionx: 64,
+					resolutiony: 64,
+				},
+			],
+		},
 		'N4-1234': {
 			productName: 'Stream Dock N4',
+			iconRotation: 180,
 			pid: 0x1002,
 			inputs: [
 				{
@@ -858,6 +1349,7 @@ class StreamDock extends EventEmitter {
 		},
 		'N4-1245': {
 			productName: 'Stream Dock N4',
+			iconRotation: 180,
 			pid: 0x1002,
 			inputs: [
 				{
@@ -1185,305 +1677,8 @@ class StreamDock extends EventEmitter {
 					resolutiony: 124,
 				},
 			],
-		},
-		'293S': {
-	    productName: 'Stream Dock 293S',
-	    pid: 0x6670,
-			inputs: [
-				{
-					type: 'push',
-					id: 0x0d,
-					row: 0,
-					column: 0,
-					name: 'Button 1',
-				},
-				{
-					type: 'push',
-					id: 0x0a,
-					row: 0,
-					column: 1,
-					name: 'Button 2',
-				},
-				{
-					type: 'push',
-					id: 0x07,
-					row: 0,
-					column: 2,
-					name: 'Button 3',
-				},
-				{
-					type: 'push',
-					id: 0x04,
-					row: 0,
-					column: 3,
-					name: 'Button 4',
-				},
-				{
-					type: 'push',
-					id: 0x01,
-					row: 0,
-					column: 4,
-					name: 'Button 5',
-				},
-				{
-					type: 'push',
-					id: 0x0e,
-					row: 1,
-					column: 0,
-					name: 'Button 6',
-				},
-				{
-					type: 'push',
-					id: 0x0b,
-					row: 1,
-					column: 1,
-					name: 'Button 7',
-				},
-				{
-					type: 'push',
-					id: 0x08,
-					row: 1,
-					column: 2,
-					name: 'Button 8',
-				},
-				{
-					type: 'push',
-					id: 0x05,
-					row: 1,
-					column: 3,
-					name: 'Button 9',
-				},
-				{
-					type: 'push',
-					id: 0x02,
-					row: 1,
-					column: 4,
-					name: 'Button 10',
-				},
-				{
-					type: 'push',
-					id: 0x0f,
-					row: 2,
-					column: 0,
-					name: 'Button 11',
-				},
-				{
-					type: 'push',
-					id: 0x0c,
-					row: 2,
-					column: 1,
-					name: 'Button 12',
-				},
-				{
-					type: 'push',
-					id: 0x09,
-					row: 2,
-					column: 2,
-					name: 'Button 13',
-				},
-				{
-					type: 'push',
-					id: 0x06,
-					row: 2,
-					column: 3,
-					name: 'Button 14',
-				},
-				{
-					type: 'push',
-					id: 0x03,
-					row: 2,
-					column: 4,
-					name: 'Button 15',
-				},
-	
-				{
-					type: 'push',
-					id: 0x10,
-					row: 0,
-					column: 5,
-					name: 'Softbutton 1',
-				},
-				{
-					type: 'push',
-					id: 0x11,
-					row: 1,
-					column: 5,
-					name: 'Softbutton 2',
-				},
-				{
-					type: 'push',
-					id: 0x12,
-					row: 2,
-					column: 5,
-					name: 'Softbutton 3',
-				}
-			],
-			outputs: [
-				{
-					type: 'lcd',
-					id: 0x0d,
-					row: 0,
-					column: 0,
-					name: 'LCD 1',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x0a,
-					row: 0,
-					column: 1,
-					name: 'LCD 2',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x07,
-					row: 0,
-					column: 2,
-					name: 'LCD 3',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x04,
-					row: 0,
-					column: 3,
-					name: 'LCD 4',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x01,
-					row: 0,
-					column: 4,
-					name: 'LCD 5',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x0e,
-					row: 1,
-					column: 0,
-					name: 'LCD 6',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x0b,
-					row: 1,
-					column: 1,
-					name: 'LCD 7',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x08,
-					row: 1,
-					column: 2,
-					name: 'LCD 8',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x05,
-					row: 1,
-					column: 3,
-					name: 'LCD 9',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x02,
-					row: 1,
-					column: 4,
-					name: 'LCD 10',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x0f,
-					row: 2,
-					column: 0,
-					name: 'LCD 11',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x0c,
-					row: 2,
-					column: 1,
-					name: 'LCD 12',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x09,
-					row: 2,
-					column: 2,
-					name: 'LCD 13',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x06,
-					row: 2,
-					column: 3,
-					name: 'LCD 14',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
-				{
-					type: 'lcd',
-					id: 0x03,
-					row: 2,
-					column: 4,
-					name: 'LCD 15',
-					resolutionx: 85,
-					resolutiony: 85,
-				},
+		}
 
-				{
-					type: 'lcd',
-					id: 0x10,
-					row: 0,
-					column: 5,
-					name: 'Strip 1',
-					resolutionx: 80,
-					resolutiony: 80,
-				},
-				{
-					type: 'lcd',
-					id: 0x11,
-					row: 1,
-					column: 5,
-					name: 'Strip 2',
-					resolutionx: 80,
-					resolutiony: 80,
-				},
-				{
-					type: 'lcd',
-					id: 0x12,
-					row: 2,
-					column: 5,
-					name: 'Strip 3',
-					resolutionx: 80,
-					resolutiony: 80,
-				}
-			],
-		},
 	}
 
 
@@ -1492,7 +1687,7 @@ class StreamDock extends EventEmitter {
 
 	private info: Device
 	private device: HIDAsync
-	private model: StreamDockModelDefinition = { productName: 'Unknown Stream Dock', inputs: [], outputs: [] }
+	private model: StreamDockModelDefinition = { productName: 'Unknown Stream Dock', iconRotation: 0, inputs: [], outputs: [] }
 
 	constructor(deviceInfo: Device, device: HIDAsync) {
 		super()
@@ -1505,21 +1700,32 @@ class StreamDock extends EventEmitter {
 			this.emit('error', error)
 		})
 
-		if (this.info.productId === 0x1005 || this.info.productId === 0x1006) {
-			// modelType = '293V3'
-			this.model = StreamDock.models['293V3']
-			this.packetSize = 1024
-		} else if (this.info.productId === 0x1001 || this.info.productId === 0x1007) {
-			// modelType = 'N4'
-			this.model = StreamDock.models['N4-1234']
-			this.packetSize = 1024
-		} else if (this.info.productId === 0x6670) {
-			// modelType = '293S (Slim)'
-			this.model = StreamDock.models['293S']
-			this.packetSize = 512
-		} else {
-			// this.modelType = 'Unknown'
-			this.emit('remove')
+		switch (this.info.productId) {
+			case 0x1005:
+			case 0x1006: { 
+				this.model = StreamDock.models['293V3']
+				this.packetSize = 1024
+				break
+			}
+			case 0x1001:
+			case 0x1007: {  // modelType = 'N4'
+				this.model = StreamDock.models['N4-1234']
+				this.packetSize = 1024
+				break
+			}
+			case 0x6670: { 	// modelType = '293S (Slim)'
+				this.model = StreamDock.models['293S']
+				this.packetSize = 512
+				break
+			}
+			case 0x1003: { 	// modelType = 'N3-EN'
+				this.model = StreamDock.models['N3-EN']
+				this.packetSize = 1024
+				break
+			}
+			default: {
+				this.emit('remove')
+			}
 		}
 
 		this.device.on('data', (data) => {
@@ -1650,13 +1856,18 @@ class StreamDock extends EventEmitter {
 	}
 
 	// is there a better place to handle this?
-	// the rotation config option acts on the entire surface and not just icon rotation 
-	get rotationIconOnly() {
-		if (this.model?.productName === 'Stream Dock 293S') {
-			return -90 // the 293S needs some special rotation
-
-		}
-		else return 0
+	// the rotation config option acts on the entire surface and not just icon rotation
+	// and the different models all seem to have varying placement of the displays
+	// get iconRotationByModel() {
+	// 	switch(this.model?.productName) {
+	// 		case 'Stream Dock 293S': { return 90 ; break}
+	// 		case 'Stream Dock N3': { return -90 ; break }
+	// 		case 'Stream Dock N4': { return 180 ; break}
+	// 		default: { return 0 ; break}
+	// 	}
+	// }
+	get iconRotation() {
+		return this.model.iconRotation ?? 0
 	}
 
 	get productName() {
